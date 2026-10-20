@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minion</title>
+    <style>
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .canvas {
+            /* border: 1px solid red; */
+            width: 500px;
+            height: 650px;
+            box-shadow: 0px 0px 20px black;
+            border-radius: 20px;
+        }
+
+        .torso {
+            /* border: 1px solid red; */
+            /* background-color: rgb(255, 255, 35); */
+            background: radial-gradient(circle at 50% 30%, rgb(255, 255, 63), rgb(255, 191, 73) 100%);
+            height: 450px;
+            width: 50%;
+            position: relative;
+            top: 15%;
+            left: 25%;
+            border-radius: 200px;
+            box-shadow: 0px 0px 5px gray;
+        }
+
+        .specs {
+            height: 25px;
+            width: 102%;
+            position: relative;
+            left: -1%;
+            top: 25%;
+            /* z-index: 10; */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-bottom: 2px solid gray;
+            background-color: rgb(19, 19, 19);
+            /* background-image: linear-gradient(black,black,rgb(63, 62, 62),black,black,rgb(63, 62, 62),black,black); */
+            background-image: linear-gradient(black, black, black, rgba(192, 192, 192, 0.7), black, black, black);
+            /* box-shadow: 0px 13px rgb(0, 0, 0); */
+            /* border-top-left-radius: 3px;
+            border-top-right-radius: 3px; */
+            border-radius: 5px;
+            /* z-index: 10; */
+        }
+
+        .specs::after, .specs::before {
+            content: "";
+            display: inline-block;
+            height: 30px;
+            width: 10px;
+            border: 1px solid silver;
+            background-image: linear-gradient(90deg, silver,white,silver);
+            border-radius: 10px;
+            position: relative;
+            /* top: 5%; */
+            z-index: 1;
+        }
+
+        .specs::before{
+            left:-4%
+        }
+        .specs::after{
+            right: -4%;
+        }
+
+        .specs-glass {
+            position: relative;
+            top: 5%;
+            height: 100px;
+            width: 40%;
+            /* border: 13px solid transparent; */
+            border-radius: 100px;
+            /* background-color: red; */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            /* box-shadow: 0px -3px 0px rgb(145, 143, 143),0px 3px 0px rgb(145, 143, 143); */
+            z-index: 2;
+        }
+
+        .specs-glass::before {
+            content: "";
+            display: inline-block;
+            height: 130px;
+            width: 120%;
+            border-radius: 100px;
+            /* background-color: red; */
+            /* background: radial-gradient(circle at 50% 50%, silver 40px, grey 80%); */
+            background-image: linear-gradient(white, silver, white, silver, white);
+            position: absolute;
+            border: 2px solid silver;
+            /* z-index: 10; */
+        }
+
+        .specs-eye {
+            position: relative;
+            height: 100px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            /* border: 2px solid rgb(212, 212, 3); */
+            background: radial-gradient(circle at 50% 50%, white 40px, grey 80%);
+            border-radius: 50px;
+            /* box-shadow: 0px -3px 0px yellow,0px 3px 0px yellow; */
+        }
+
+        /* .specs-eye::after{
+            content: "";
+            display: inline-block;
+            height: 90px;
+            width: 90%;
+            border: 1px solid red;
+            position: absolute;
+            border-radius: 50px;
+            box-shadow: 0px 0px 10px gray
+        } */
+
+        .specs-eye-iris {
+            /* background-color: rgba(112, 36, 1, 0.662); */
+            background:
+                radial-gradient(circle, rgb(255, 123, 0) 10px, black 100%);
+            height: 40px;
+            width: 40%;
+            border-radius: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            /* box-shadow: 0px 0px 20px gray; */
+        }
+
+        .specs-eye-pupil {
+            background-color: rgba(0, 0, 0, 0.769);
+            height: 18px;
+            width: 45%;
+            border-radius: 35px;
+        }
+
+        .specs-eye-pupil-dot {
+            height: 5px;
+            width: 5px;
+            border-radius: 5px;
+            background-color: white;
+            position: relative;
+            left: 15%;
+            top: 15%;
+        }
+
+
+
+        .smile {
+            position: relative;
+            top: 40%;
+            left: 40%;
+            height: 50px;
+            width: 50px;
+            /* border: 5px solid black; */
+            /* border-bottom: 3px solid rgb(215, 165, 1); */
+            border-radius: 100px;
+            /* box-shadow: 50px 50px 0px solid red; */
+            /* background-color: red; */
+        }
+
+        .smile::after {
+            content: "";
+            display: inline-block;
+            position: absolute;
+            top: -230%;
+            left: -90%;
+            height: 150px;
+            width: 150px;
+            border-bottom: 5px solid rgb(215, 165, 1);
+            clip-path: circle(50% at 50% 50%);
+            border-radius: 65px;
+            z-index: 10;
+            transform: scaleX(1.5);
+        }
+
+
+        /* pants section */
+        .pants {
+            height: 200px;
+            /* border: 1px solid red; */
+            position: relative;
+            top: 40%;
+        }
+
+        .pant-lower-part {
+            /* background-color: rgb(0, 132, 255); */
+            height: 100px;
+            position: relative;
+            top: 50%;
+            border-bottom-left-radius: 100px;
+            border-bottom-right-radius: 100px;
+            border-top: 2.5px dashed silver;
+            box-shadow: 0px -5px 0px rgb(0, 0, 255), 0 0px 2px black;
+            /* border-top-left-radius: -100px; */
+            /* background: radial-gradient(circle at 51% 30%, rgb(61, 61, 255) 50px, #4a90e2 100px); */
+            /* background: rgb(61, 61, 255); */
+            background:
+                radial-gradient(circle at 10% 10%, blue, transparent 80%),
+                radial-gradient(circle at 80% 10%, blue, black 80%);
+        }
+
+        /* pockets */
+        .pant-lower-part::before,
+        .pant-lower-part::after {
+            content: "";
+            display: inline-block;
+            height: 50px;
+            width: 50px;
+            position: relative;
+            /* background-color: red; */
+            border-radius: 50px;
+            border-bottom: 3.5px dashed silver;
+
+        }
+
+        .pant-lower-part::before {
+            left: 7.2%;
+            top: -2%;
+            transform: rotate(-46deg);
+            /* box-shadow: 10px 0 0 1px red; */
+            /* background: transparent; */
+
+        }
+
+        .pant-lower-part::after {
+            left: 53.5%;
+            transform: rotate(40deg);
+        }
+
+        .pant-upper-part {
+            position: relative;
+            top: -25%;
+            left: 25%;
+            width: 50%;
+            height: 80px;
+            /* background: radial-gradient(circle at 50% 80%, rgb(61, 61, 255) 40px, #4a90e2 100px); */
+            background: rgb(61, 61, 255);
+            background:
+                radial-gradient(circle at -20% 100%, blue, transparent 100%),
+                radial-gradient(circle at 110% 100%, blue, black 100%);
+            /* background: rgb(61, 61, 255); */
+            /* border: 2.5px dashed white; */
+            border-bottom: none;
+            /* box-shadow: 0 -7px 5px 1px black; */
+            /* clip-path: polygon(20% 0%,80% 0%, 100% 100%,0% 100%); */
+            /* box-shadow: 0px -5px 0px rgb(61, 61, 255) */
+            /* z-index: 10; */
+        }
+
+        .pant-upper-part::before {
+            content: "";
+            display: inline-block;
+            position: relative;
+            height: 70px;
+            width: 90%;
+            top: 5%;
+            left: 4%;
+            /* background-color: rgb(61, 61, 255); */
+            border: 2.5px dashed silver;
+            border-bottom: none;
+
+        }
+
+        /* upper pocket */
+        .pant-upper-part::after {
+            content: "";
+            display: inline-block;
+            position: relative;
+            top: -70%;
+            left: 28%;
+            height: 40px;
+            width: 60px;
+            border-bottom-left-radius: 60px;
+            border-bottom-right-radius: 60px;
+            /* background-color: red; */
+            border: 3px dashed silver;
+            box-shadow: 0 -2px 5px 1px black;
+
+        }
+
+        /* pants strips */
+        .pants::before,
+        .pants::after {
+            content: "";
+            display: inline-block;
+            width: 110px;
+            height: 10px;
+            background-color: red;
+            position: absolute;
+            background: radial-gradient(circle at 95% 45%, rgb(55, 0, 0) 5px, blue 5%);
+            border: 2px dashed silver;
+            border-left: none;
+            box-shadow: 0 0 0 2px blue, 0 0 5px 2px black;
+            /* border-top-left-radius: 10px; */
+            border-radius: 10px;
+            z-index: 10;
+        }
+
+        .pants::before {
+            top: 8%;
+            left: -9%;
+            transform: rotate(45deg);
+            border-bottom-left-radius: 60px;
+        }
+
+        .pants::after {
+            top: 8%;
+            left: 64%;
+            transform: rotate(135deg);
+            border-top-left-radius: 60px;
+        }
+
+        /* legs and shoes */
+        .legs-section {
+            height: 70px;
+            width: 100%;
+            /* border: 1px solid red; */
+            position: relative;
+            top: 40%;
+        }
+
+        .legs {
+            height: 60px;
+            width: 50px;
+            background: radial-gradient(circle at 50% 20%, blue 10px, black 100%);
+            /* border: 1px solid red; */
+            position: absolute;
+            top: -15%;
+            z-index: -1;
+            border-bottom-left-radius: 50px;
+            border-bottom-right-radius: 50px;
+            box-shadow: 0 0 5px black;
+        }
+
+        .left-leg {
+            left: 27%;
+        }
+
+        .right-leg {
+            left: 53%;
+        }
+
+        /* shoes */
+        /* .left-leg::before,.right-leg::before{
+            content:"";
+            display: inline-block;
+            height: 20px;
+            width: 40px;
+            background: brown;
+        } */
+
+        .legs::before {
+            content: "";
+            display: inline-block;
+            height: 33px;
+            width: 75px;
+            background: radial-gradient(circle at 30% 0%, rgb(55, 55, 55) 5px, black 50%);
+            position: relative;
+            top: 70%;
+            /* left: 10%; */
+            /* border: 2px solid black; */
+            border-top-right-radius: 100px;
+            border-bottom-right-radius: 50px;
+            border-bottom-left-radius: 30px;
+            border-top-left-radius: 30px;
+            box-shadow: 0 0 5px black;
+        }
+
+        .left-leg::before {
+            transform: rotateY(180deg);
+            left: -48%;
+        }
+
+
+        /* hands section */
+        .hands-section {
+            height: 200px;
+            width: 150%;
+            /* border: 1px solid red; */
+            position: absolute;
+            top: 55%;
+            left: -25%;
+        }
+
+        .hands {
+            height: 155px;
+            width: 30px;
+            background: radial-gradient(circle at 50% 40%, rgb(255, 255, 63), rgb(255, 191, 73) 100%);
+            position: absolute;
+            /* top: -10%; */
+            border-top-left-radius: 120px;
+            /* border-top-right-radius: 150px; */
+            /* box-shadow: -3px 0px 5px  black; */
+            /* border-top-right-radius: 100px; */
+            /* border-left: 1px solid gray;
+            border-top: none; */
+            /* z-index: -1; */
+
+        }
+
+        .hands::before {
+            content: "";
+            display: inline-block;
+            height: 100px;
+            width: 1px;
+            /* background-color: gray; */
+            box-shadow: 0 0 15px 1px red;
+            position: absolute;
+            /* z-index: 10; */
+            top: 30%;
+            left: 100%;
+        }
+
+        .left-hand {
+            transform: rotate(5deg);
+            left: 11%;
+        }
+
+        .right-hand {
+            transform: rotateY(180deg) rotate(5deg);
+            right: 11%;
+        }
+
+
+        /* gloves */
+
+        .gloves {
+            height: 60px;
+            width: 37px;
+            background: radial-gradient(circle at 40% 170%, white 20px, black 50%);
+            position: absolute;
+            top: 75%;
+            border-bottom-left-radius: 100px;
+            border-bottom-right-radius: 30px;
+            z-index: 10;
+            border-top: 3px solid grey;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+        }
+
+        .gloves::before,
+        .gloves::after {
+            content: "";
+            display: inline-block;
+            height: 35px;
+            width: 25px;
+            background: radial-gradient(circle at 50% 150%, grey, black 60%);
+            /* background: red; */
+            position: absolute;
+            /* top: 40%; */
+            border-bottom-left-radius: 30px;
+            border-bottom-right-radius: 30px;
+            z-index: -10;
+        }
+
+        .left-glove {
+            left: 9%;
+            transform: rotate(-5deg);
+        }
+
+        /* .left-glove::before{
+            top:30%;
+            left: -40%;
+            transform: rotate(50deg);
+            background: black;
+        }
+         .left-glove::after{
+            top:30%;
+            right: -40%;
+            transform: rotate(-50deg);
+            background: black;
+        } */
+
+        .right-glove {
+            right: 9%;
+            transform: rotate(5deg) rotateY(180deg);
+        }
+
+        .left-glove::before,
+        .right-glove::before {
+            top: 30%;
+            left: -20%;
+            transform: rotate(50deg);
+            /* background: black; */
+            border-bottom-left-radius: 100px;
+            border-bottom-right-radius: 50px;
+            background: radial-gradient(circle at -15% 150%, grey, black 60%);
+            /* position: relative;
+            z-index: -10; */
+        }
+
+        .left-glove::after,
+        .right-glove::after {
+            top: 30%;
+            right: -40%;
+            transform: rotate(-50deg);
+            background: radial-gradient(circle at -15% 150%, grey, black 60%);
+            /* background: black; */
+            border-bottom-left-radius: 50px;
+            border-bottom-right-radius: 100px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="canvas">
+        <div class="torso">
+            <div class="specs">
+                <div class="specs-glass">
+                    <div class="specs-eye">
+                        <div class="specs-eye-iris">
+                            <div class="specs-eye-pupil">
+                                <div class="specs-eye-pupil-dot"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="smile"></div>
+
+            <div class="pants">
+                <div class="pant-lower-part"></div>
+                <div class="pant-upper-part"></div>
+            </div>
+
+            <div class="legs-section">
+                <div class="left-leg legs"></div>
+                <div class="right-leg legs"></div>
+            </div>
+
+            <div class="hands-section">
+                <div class="left-hand hands"></div>
+                <div class="right-hand hands"></div>
+
+                <div class="left-glove gloves"></div>
+                <div class="right-glove gloves"></div>
+            </div>
+        </div>
+    </div>
+
+
+</body>
+
+</html>
